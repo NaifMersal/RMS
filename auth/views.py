@@ -22,7 +22,7 @@ from rest_framework import status
 #         })
 
 @permission_classes([AllowAny])
-@api_view(['GET','POST'])
+@api_view(['POST'])
 def regster(request):
     if request.method == 'POST':
         user_serializer=serializer.UserSerializer(data=request.data)
