@@ -15,7 +15,7 @@ def get_post_refrences(request):
 
     if request.method=='GET':
         print(request.data)
-        refrences= models.Refrence.objects.filter(user=request.user).all()
+        refrences= models.Refrence.objects.filter(user=request.user.id).all()
         ser_ref= serializer.Refrence(refrences, many=True)
         return Response(ser_ref.data)
     

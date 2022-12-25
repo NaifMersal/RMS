@@ -24,14 +24,11 @@ from rest_framework import status
 @permission_classes([AllowAny])
 @api_view(['GET','POST'])
 def regster(request):
-    
-    if request.method == 'GET':
-        return Response({'mes':'very good'})
     if request.method == 'POST':
         user_serializer=serializer.UserSerializer(data=request.data)
         if(user_serializer.is_valid()):
-            user_serializer.save()
-            token=Token.objects.create(user=user_serializer.data['id'])
+            user=user_serializer.create(user_serializer.validated_data)
+            token=Token.objects.create(user=user)
             return Response({'token': token.key})
 
     return Response(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
