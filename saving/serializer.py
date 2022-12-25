@@ -27,4 +27,4 @@ class Refrence(serializers.ModelSerializer):
         model= models.Refrence
         fields='__all__'
         extra_kwargs = {'password': {'write_only': True}}
-        read_only_fields = ['account_name']
+        #read_only_fields = ['account_name']
