@@ -27,7 +27,7 @@ def regster(request):
     if request.method == 'POST':
         user_serializer=serializer.UserSerializer(data=request.data)
         if(user_serializer.is_valid()):
-            user=user_serializer.create(user_serializer.validated_data)
+            user=user_serializer.save()
             token=Token.objects.create(user=user)
             return Response({'token': token.key})
 

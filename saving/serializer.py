@@ -2,7 +2,8 @@ from rest_framework import serializers
 from . import models
 
 
-class Author(serializers.ModelSerializer):
+
+class AuthorSerializer(serializers.ModelSerializer):
 
     class Meta:
         model= models.Author
@@ -10,7 +11,7 @@ class Author(serializers.ModelSerializer):
 
 
 
-class Category(serializers.ModelSerializer):
+class CategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model= models.Category
@@ -21,9 +22,29 @@ class Category(serializers.ModelSerializer):
 
 
 
-class Refrence(serializers.ModelSerializer):
+class RefrenceSerializer(serializers.ModelSerializer):
+    categories=CategorySerializer(many=True, required=False)
 
     class Meta:
         model= models.Refrence
-        fields='__all__'
-        extra_kwargs = {'user': {'write_only': True}}
+        exclude=['user']
+
+    
+    
+
+
+    
+    def create(self, validated_data, user_id):
+        categories_data=validated_data.pop('categories',default=None)
+        data={ **validated_data, "user": user_id}
+        refrence=models.Refrence.objects.create(**data)
+        print(type(categories_data))
+        if(categories_data is not None):
+            for category in categories_data:
+                refrence.categories.add(models.Category.objects.get_or_create(tag=category))
+
+        return refrence
+
+
+
+
