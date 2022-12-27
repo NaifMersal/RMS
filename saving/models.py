@@ -36,8 +36,8 @@ class Refrence(models.Model):
     location=models.TextField()
     description=models.TextField(null=True)
     author=models.ForeignKey(Author, on_delete=models.SET_NULL, null=True)
-    user=models.ForeignKey(User, on_delete=models.CASCADE)
-
+    user=models.ForeignKey(User, on_delete=models.CASCADE) 
+                                                            #created at
     categories=models.ManyToManyField(Category,null=True)
 
 
