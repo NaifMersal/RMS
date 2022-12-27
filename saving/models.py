@@ -16,14 +16,9 @@ class Author(models.Model):
 class Category(models.Model):
     tag=models.CharField(default='unknown',max_length=50)
     
-    
-
 
     def __str__(self):
         return self.tag
-
-    def get_unkown():
-        return Category.objects.get_or_create(tag='unknown')
     
 
 
@@ -43,7 +38,7 @@ class Refrence(models.Model):
     author=models.ForeignKey(Author, on_delete=models.SET_NULL, null=True)
     user=models.ForeignKey(User, on_delete=models.CASCADE)
 
-    categories=models.ManyToManyField(Category, default=Category.get_unkown)
+    categories=models.ManyToManyField(Category,null=True)
 
 
     def __str__(self):
